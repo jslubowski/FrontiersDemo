@@ -1,0 +1,29 @@
+@FrontiersDemo_HostAddress = http://localhost:5090
+
+### Register user (success)
+POST {{FrontiersDemo_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "userName": "jdoe",
+  "universityName": "Warsaw University of Technology",
+  "numberOfPublications": 5
+}
+
+### Register user (no match → 400)
+POST {{FrontiersDemo_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "userName": "jdoe",
+  "universityName": "asdfqwerty-not-a-real-university",
+  "numberOfPublications": 5
+}
+
+### Invite reviewer
+POST {{FrontiersDemo_HostAddress}}/reviewers/invite
+Content-Type: application/json
+
+{
+  "userId": 1
+}
