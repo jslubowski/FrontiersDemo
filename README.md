@@ -24,19 +24,10 @@ Scalar and the OpenAPI spec are available at:
 
 ### Configuration
 
-The `Frontiers` section in `appsettings.json` controls the external organizations API:
-
-```json
-"Frontiers": {
-  "BaseUrl": "https://organizations-api.frontiersin.org",
-  "MaxCount": 1
-}
-```
-
-Override either value via environment variable before running:
+Override the Frontiers API base URL via environment variable before running:
 
 ```bash
-Frontiers__BaseUrl=https://... Frontiers__MaxCount=5 dotnet run --project src/FrontiersDemo.Api
+Frontiers__BaseUrl=https://... dotnet run --project src/FrontiersDemo.Api
 ```
 
 ### Running tests

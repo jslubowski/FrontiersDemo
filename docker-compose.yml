@@ -8,4 +8,3 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - Frontiers__BaseUrl=https://organizations-api.frontiersin.org
-      - Frontiers__MaxCount=1
