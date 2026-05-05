@@ -23,16 +23,4 @@ public sealed class FrontiersOrganizationsClient(HttpClient http, IOptions<Front
             first.Street, first.ZipCode, first.State, first.WebDomain,
             first.Score);
     }
-
-    private sealed record FrontiersResponseItem(
-        long Id,
-        string? OrganizationName,
-        string? Country,
-        string? CountryIsoCode,
-        string? City,
-        string? Street,
-        string? ZipCode,
-        string? State,
-        string? WebDomain,
-        double Score);
 }

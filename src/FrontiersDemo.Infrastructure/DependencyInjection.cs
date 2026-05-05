@@ -24,7 +24,7 @@ public static class DependencyInjection
         services.AddOptions<FrontiersApiOptions>()
             .Bind(configuration.GetSection(FrontiersApiOptions.SectionName));
 
-        services.AddHttpClient<IFrontiersOrganizationsClient, FrontiersOrganizationsClient>((sp, client) =>
+        services.AddHttpClient<IFrontiersOrganizationsClient, FrontiersOrganizationsClient>((_, client) =>
             {
                 var opts = configuration.GetSection(FrontiersApiOptions.SectionName).Get<FrontiersApiOptions>()
                            ?? new FrontiersApiOptions();
