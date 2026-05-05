@@ -9,4 +9,5 @@ public sealed record OrganizationSuggestion(
     string? Street,
     string? ZipCode,
     string? State,
-    string? WebDomain);
+    string? WebDomain,
+    double Score);

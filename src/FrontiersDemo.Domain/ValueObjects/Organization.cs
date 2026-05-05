@@ -8,10 +8,11 @@ public sealed class Organization
     public string? CountryIsoCode { get; private set; }
     public string? City { get; private set; }
     public string? WebDomain { get; private set; }
+    public double Score { get; private set; }
 
     private Organization() { }
 
-    public Organization(long frontiersId, string name, string? country, string? countryIsoCode, string? city, string? webDomain)
+    public Organization(long frontiersId, string name, string? country, string? countryIsoCode, string? city, string? webDomain, double score)
     {
         FrontiersId = frontiersId;
         Name = name;
@@ -19,5 +20,6 @@ public sealed class Organization
         CountryIsoCode = countryIsoCode;
         City = city;
         WebDomain = webDomain;
+        Score = score;
     }
 }

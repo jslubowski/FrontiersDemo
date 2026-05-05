@@ -25,7 +25,7 @@ public sealed class RegisterUserCommandHandler(
         }
 
         var organization = new Organization(
-            match.Id, match.OrganizationName, match.Country, match.CountryIsoCode, match.City, match.WebDomain);
+            match.Id, match.OrganizationName, match.Country, match.CountryIsoCode, match.City, match.WebDomain, match.Score);
 
         var user = new User(request.UserName, request.NumberOfPublications, organization);
         db.Users.Add(user);

@@ -35,5 +35,17 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
             context.Response.StatusCode = StatusCodes.Status404NotFound;
             await context.Response.WriteAsJsonAsync(problem);
         }
+        catch (BadHttpRequestException ex)
+        {
+            logger.LogInformation("Bad request: {Message}", ex.Message);
+            var problem = new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Invalid request body.",
+                Detail = "The request body could not be parsed. Please check that all fields have the correct types and values."
+            };
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(problem);
+        }
     }
 }

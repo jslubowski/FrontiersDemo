@@ -20,7 +20,8 @@ public sealed class FrontiersOrganizationsClient(HttpClient http, IOptions<Front
         return new OrganizationSuggestion(
             first.Id, first.OrganizationName ?? string.Empty,
             first.Country, first.CountryIsoCode, first.City,
-            first.Street, first.ZipCode, first.State, first.WebDomain);
+            first.Street, first.ZipCode, first.State, first.WebDomain,
+            first.Score);
     }
 
     private sealed record FrontiersResponseItem(
@@ -32,5 +33,6 @@ public sealed class FrontiersOrganizationsClient(HttpClient http, IOptions<Front
         string? Street,
         string? ZipCode,
         string? State,
-        string? WebDomain);
+        string? WebDomain,
+        double Score);
 }
