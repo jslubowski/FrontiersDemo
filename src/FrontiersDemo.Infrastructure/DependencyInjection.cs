@@ -1,6 +1,7 @@
 using FrontiersDemo.Application.Common.Interfaces;
 using FrontiersDemo.Infrastructure.ExternalServices.Frontiers;
 using FrontiersDemo.Infrastructure.Persistence;
+using FrontiersDemo.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,9 @@ public static class DependencyInjection
     {
         services.AddDbContext<ApplicationDbContext>(o => o.UseInMemoryDatabase("FrontiersDemo"));
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IReviewerInvitationRepository, ReviewerInvitationRepository>();
 
         services.AddSingleton(TimeProvider.System);
 

@@ -2,11 +2,14 @@ using FrontiersDemo.Application.Common.Exceptions;
 using FrontiersDemo.Application.Common.Interfaces;
 using FrontiersDemo.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace FrontiersDemo.Application.Reviewers.Commands.InviteReviewer;
 
-public sealed class InviteReviewerCommandHandler(IApplicationDbContext db, TimeProvider clock)
+public sealed class InviteReviewerCommandHandler(
+    IUserRepository users,
+    IReviewerInvitationRepository invitations,
+    IUnitOfWork unitOfWork,
+    TimeProvider clock)
     : IRequestHandler<InviteReviewerCommand, InviteReviewerResult>
 {
     private const int MinPublications = 3;
@@ -14,7 +17,7 @@ public sealed class InviteReviewerCommandHandler(IApplicationDbContext db, TimeP
 
     public async Task<InviteReviewerResult> Handle(InviteReviewerCommand request, CancellationToken ct)
     {
-        var user = await db.Users.FirstOrDefaultAsync(u => u.Id == request.UserId, ct);
+        var user = await users.GetByIdAsync(request.UserId, ct);
         if (user is null)
             throw new NotFoundException(nameof(User), request.UserId);
 
@@ -26,8 +29,8 @@ public sealed class InviteReviewerCommandHandler(IApplicationDbContext db, TimeP
         }
 
         var invitation = new ReviewerInvitation(request.UserId, clock.GetUtcNow());
-        db.ReviewerInvitations.Add(invitation);
-        await db.SaveChangesAsync(ct);
+        await invitations.AddAsync(invitation, ct);
+        await unitOfWork.SaveChangesAsync(ct);
 
         return new InviteReviewerResult(true, "The invitation was sent successfully.", invitation.Id);
     }

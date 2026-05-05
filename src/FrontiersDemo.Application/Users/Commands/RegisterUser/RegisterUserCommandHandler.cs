@@ -9,7 +9,8 @@ using ValidationException = FrontiersDemo.Application.Common.Exceptions.Validati
 namespace FrontiersDemo.Application.Users.Commands.RegisterUser;
 
 public sealed class RegisterUserCommandHandler(
-    IApplicationDbContext db,
+    IUserRepository users,
+    IUnitOfWork unitOfWork,
     IFrontiersOrganizationsClient frontiers)
     : IRequestHandler<RegisterUserCommand, RegisterUserResult>
 {
@@ -28,8 +29,8 @@ public sealed class RegisterUserCommandHandler(
             match.Id, match.OrganizationName, match.Country, match.CountryIsoCode, match.City, match.WebDomain, match.Score);
 
         var user = new User(request.UserName, request.NumberOfPublications, organization);
-        db.Users.Add(user);
-        await db.SaveChangesAsync(ct);
+        await users.AddAsync(user, ct);
+        await unitOfWork.SaveChangesAsync(ct);
 
         return new RegisterUserResult(new UserDto(
             user.Id, user.UserName, user.NumberOfPublications,
